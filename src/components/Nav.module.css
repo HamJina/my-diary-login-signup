@@ -7,6 +7,7 @@
     display: flex;
     justify-content: right;
     gap: 16px;
+    align-items: center;
 }
 
 .nav .tit{
@@ -16,4 +17,13 @@
 .nav a{
     color: #fff;
     text-decoration: none;
+}
+
+.nav button {
+    padding: 6px 12px;
+    border-radius: 10px;
+    background-color: teal;
+    border: none;
+    color: #fff;
+    cursor: pointer;
 }
