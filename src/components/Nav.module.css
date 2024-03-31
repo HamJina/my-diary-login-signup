@@ -20,6 +20,7 @@
 }
 
 .nav button {
+    margin-left: 20px;
     padding: 6px 12px;
     border-radius: 10px;
     background-color: teal;

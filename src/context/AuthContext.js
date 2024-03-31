@@ -1,4 +1,6 @@
-import { createContext, useReducer } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { createContext, useEffect, useReducer } from 'react';
+import { appAuth } from '../firebase/config';
 
 // context를 객체를 생성합니다.
 const AuthContext = createContext();
@@ -11,18 +13,31 @@ const authReducer = (state, action) => {
             return { ...state, user: action.payload }
         case 'logout':
             return { ...state, user: null }
+        case 'authIsReady':
+            return { ...state, user: action.payload, isAuthReady: true }
         default:
             return state
     }
 }
+
 
 // context를 객체를 구독할 컴포넌트의 묶음 범위를 설정합니다.
 const AuthContextProvider = ({ children }) => {
 
     //유저 정보를 관리하는 상태변화변수
     const [state, dispatch] = useReducer(authReducer, {
-        user: null
+        user: null,
+        // 사용자 인증정보가 준비되었는지 확인할 수 있는 변수
+        isAuthReady: false
     })
+
+    useEffect(() => {
+        //user의 변화를 관찰하는 함수이다. 구독을 중지하기 전까지 
+        const unsubscribe = onAuthStateChanged(appAuth, (user) => {
+            dispatch({ type: 'authIsReady', payload: user });
+        });
+        return unsubscribe
+    }, [])
 
     console.log('user state: ', state);
 

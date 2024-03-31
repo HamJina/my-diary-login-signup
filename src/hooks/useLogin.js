@@ -7,6 +7,12 @@ export const useLogin = () => {
     const [error, setError] = useState(null);
     const [isPending, setIsPending] = useState(false);
     const { dispatch } = useAuthContext();
+
+    console.log(appAuth.currentUser);
+    setInterval(() => {
+        console.log(appAuth.currentUser);
+    }, 1000)
+    
     const login = (email, password) => {
         setError(null); // 아직 에러가 없으니 null 입니다.
         setIsPending(true); // 통신중이므로 true입니다.
